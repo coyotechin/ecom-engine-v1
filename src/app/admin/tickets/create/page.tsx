@@ -1,3 +1,4 @@
+import { createTicketAction } from "@/app/admin/tickets/create/actions";
 import { adminNavigation } from "@/config/navigation";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -12,18 +13,25 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+type CreateTicketPageProps = {
+  searchParams: Promise<{
+    success?: string;
+    error?: string;
+  }>;
+};
+
 const engineOptions = [
   {
     label: "Retail Commerce Engine",
-    value: "Retail Commerce Engine",
+    value: "retail",
   },
   {
     label: "Learning Commerce Engine",
-    value: "Learning Commerce Engine",
+    value: "learning",
   },
   {
     label: "Event Commerce Engine",
-    value: "Event Commerce Engine",
+    value: "event",
   },
 ];
 
@@ -57,71 +65,75 @@ const ticketSourceOptions = [
 const priorityOptions = [
   {
     label: "Low",
-    value: "Low",
+    value: "low",
   },
   {
     label: "Medium",
-    value: "Medium",
+    value: "medium",
   },
   {
     label: "High",
-    value: "High",
+    value: "high",
   },
 ];
 
 const statusOptions = [
   {
     label: "New Enquiry",
-    value: "New Enquiry",
+    value: "new_enquiry",
   },
   {
     label: "Requirement Collected",
-    value: "Requirement Collected",
+    value: "requirement_collected",
   },
   {
     label: "Engine Suggested",
-    value: "Engine Suggested",
+    value: "engine_suggested",
   },
   {
     label: "Commercial Discussion",
-    value: "Commercial Discussion",
+    value: "commercial_discussion",
   },
   {
     label: "Approved",
-    value: "Approved",
+    value: "approved",
   },
   {
     label: "Access Created",
-    value: "Access Created",
+    value: "access_created",
   },
   {
     label: "Setup in Progress",
-    value: "Setup in Progress",
+    value: "setup_in_progress",
   },
   {
     label: "Live",
-    value: "Live",
+    value: "live",
   },
   {
     label: "Revenue Monitoring",
-    value: "Revenue Monitoring",
+    value: "revenue_monitoring",
   },
   {
     label: "On Hold",
-    value: "On Hold",
+    value: "on_hold",
   },
   {
     label: "Rejected",
-    value: "Rejected",
+    value: "rejected",
   },
 ];
 
-export default function CreateTicketPage() {
+export default async function CreateTicketPage({
+  searchParams,
+}: CreateTicketPageProps) {
+  const { success, error } = await searchParams;
+
   return (
     <DashboardShell
       portalLabel="CYT Executive Exclusive"
       portalName="Create Ticket"
-      description="Create a new onboarding enquiry for a client interested in Ecom Engine v.1. This form will later save records into Supabase PostgreSQL."
+      description="Create a new onboarding enquiry for a client interested in Ecom Engine v.1. This form now saves records into Supabase PostgreSQL."
       navigation={adminNavigation}
     >
       <div className="space-y-8">
@@ -143,7 +155,25 @@ export default function CreateTicketPage() {
           </Button>
         </section>
 
-        <form className="space-y-6">
+        {success ? (
+          <div className="rounded-3xl border border-black bg-white p-5">
+            <p className="text-sm font-semibold text-black">Success</p>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              {success}
+            </p>
+          </div>
+        ) : null}
+
+        {error ? (
+          <div className="rounded-3xl border border-neutral-300 bg-neutral-50 p-5">
+            <p className="text-sm font-semibold text-black">
+              Ticket creation failed
+            </p>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">{error}</p>
+          </div>
+        ) : null}
+
+        <form action={createTicketAction} className="space-y-6">
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Customer Details</CardTitle>
@@ -158,6 +188,7 @@ export default function CreateTicketPage() {
                 name="customerName"
                 label="Customer Name"
                 placeholder="Example: Mr. A"
+                required
               />
 
               <Input
@@ -165,6 +196,7 @@ export default function CreateTicketPage() {
                 name="mobileNumber"
                 label="Mobile Number"
                 placeholder="+91 XXXXX XXXXX"
+                required
               />
 
               <Input
@@ -198,6 +230,7 @@ export default function CreateTicketPage() {
                 name="businessName"
                 label="Business Name"
                 placeholder="Example: ABC Boutique"
+                required
               />
 
               <Input
@@ -238,6 +271,7 @@ export default function CreateTicketPage() {
                 label="Selected Engine"
                 placeholder="Choose engine type"
                 options={engineOptions}
+                required
               />
 
               <Select
@@ -254,6 +288,7 @@ export default function CreateTicketPage() {
                 label="Priority"
                 placeholder="Choose priority"
                 options={priorityOptions}
+                required
               />
 
               <Select
@@ -262,6 +297,7 @@ export default function CreateTicketPage() {
                 label="Ticket Status"
                 placeholder="Choose status"
                 options={statusOptions}
+                required
               />
 
               <Textarea
@@ -289,14 +325,16 @@ export default function CreateTicketPage() {
                 id="setupCost"
                 name="setupCost"
                 label="Setup Cost"
-                placeholder="Example: ₹9,999"
+                placeholder="Example: 9999"
+                inputMode="decimal"
               />
 
               <Input
                 id="revenueShare"
                 name="revenueShare"
                 label="Revenue Share Percentage"
-                placeholder="Example: 15%"
+                placeholder="Example: 15"
+                inputMode="decimal"
               />
 
               <Input
@@ -317,7 +355,8 @@ export default function CreateTicketPage() {
                 id="assignedExecutive"
                 name="assignedExecutive"
                 label="Assigned Executive"
-                placeholder="Example: CYT Executive Name"
+                placeholder="Logged-in user will be assigned automatically"
+                disabled
               />
 
               <Input
@@ -341,11 +380,10 @@ export default function CreateTicketPage() {
           <div className="flex flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-base font-semibold text-black">
-                Form status
+                Database status
               </h2>
               <p className="mt-1 text-sm text-neutral-600">
-                Frontend form is ready. Database saving will be added after
-                Supabase setup.
+                This form now saves onboarding tickets into Supabase.
               </p>
             </div>
 
