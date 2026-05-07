@@ -12,6 +12,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+type AdminOnboardingPageProps = {
+  searchParams: Promise<{
+    success?: string;
+  }>;
+};
+
 type TicketStatus =
   | "new_enquiry"
   | "requirement_collected"
@@ -121,30 +127,37 @@ function getStatusVariant(status: TicketStatus | StoreStatus) {
   return "muted" as const;
 }
 
-export default async function AdminOnboardingPage() {
+export default async function AdminOnboardingPage({
+  searchParams,
+}: AdminOnboardingPageProps) {
+  const { success } = await searchParams;
+
   const supabase = await createClient();
 
-  const [{ data: ticketData, error: ticketError }, { data: businessData }, { data: storeData }] =
-    await Promise.all([
-      supabase
-        .from("onboarding_tickets")
-        .select(
-          "id, ticket_code, customer_name, business_name, business_category, selected_engine, status, revenue_share_percentage, expected_launch_date, created_at",
-        )
-        .order("created_at", { ascending: false }),
+  const [
+    { data: ticketData, error: ticketError },
+    { data: businessData },
+    { data: storeData },
+  ] = await Promise.all([
+    supabase
+      .from("onboarding_tickets")
+      .select(
+        "id, ticket_code, customer_name, business_name, business_category, selected_engine, status, revenue_share_percentage, expected_launch_date, created_at",
+      )
+      .order("created_at", { ascending: false }),
 
-      supabase
-        .from("businesses")
-        .select(
-          "id, business_name, owner_name, phone, engine_type, onboarding_status, created_at",
-        )
-        .order("created_at", { ascending: false }),
+    supabase
+      .from("businesses")
+      .select(
+        "id, business_name, owner_name, phone, engine_type, onboarding_status, created_at",
+      )
+      .order("created_at", { ascending: false }),
 
-      supabase
-        .from("stores")
-        .select("id, business_id, store_name, store_slug, status, created_at")
-        .order("created_at", { ascending: false }),
-    ]);
+    supabase
+      .from("stores")
+      .select("id, business_id, store_name, store_slug, status, created_at")
+      .order("created_at", { ascending: false }),
+  ]);
 
   const tickets = (ticketData || []) as TicketRow[];
   const businesses = (businessData || []) as BusinessRow[];
@@ -216,6 +229,15 @@ export default async function AdminOnboardingPage() {
             </Button>
           </div>
         </section>
+
+        {success ? (
+          <div className="rounded-3xl border border-black bg-white p-5">
+            <p className="text-sm font-semibold text-black">Success</p>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">
+              {success}
+            </p>
+          </div>
+        ) : null}
 
         {ticketError ? (
           <div className="rounded-3xl border border-neutral-300 bg-neutral-50 p-5">
@@ -307,7 +329,12 @@ export default async function AdminOnboardingPage() {
                           View Ticket
                         </Link>
 
-                        <Button variant="primary">Create Business</Button>
+                        <Button
+                          href={`/admin/onboarding/${ticket.id}/create-business`}
+                          variant="primary"
+                        >
+                          Create Business
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -331,7 +358,8 @@ export default async function AdminOnboardingPage() {
                     No businesses created yet
                   </p>
                   <p className="mt-2 text-sm leading-6 text-neutral-600">
-                    Business creation will be added in the next micro step.
+                    Use the Create Business button on an approved ticket to
+                    generate a client business profile.
                   </p>
                 </div>
               ) : (
@@ -382,7 +410,7 @@ export default async function AdminOnboardingPage() {
                     No stores created yet
                   </p>
                   <p className="mt-2 text-sm leading-6 text-neutral-600">
-                    Store creation will be connected after business creation.
+                    Store records will appear here after business conversion.
                   </p>
                 </div>
               ) : (
