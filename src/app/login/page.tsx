@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { signInAction } from "@/app/login/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{
+    error?: string;
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { error } = await searchParams;
+
   return (
     <main className="min-h-screen bg-white text-black">
       <section className="grid min-h-screen lg:grid-cols-[1fr_0.9fr]">
@@ -34,8 +43,8 @@ export default function LoginPage() {
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-neutral-600">
               Ecom Engine v.1 uses role-based access for CYT executives, client
-              owners, store staff, and customers. Supabase authentication will
-              control who can access each portal.
+              owners, store staff, and customers. Supabase authentication
+              controls who can access each portal.
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -65,19 +74,30 @@ export default function LoginPage() {
             <CardHeader>
               <CardTitle>Login</CardTitle>
               <CardDescription>
-                Enter your email and password to access your Ecom Engine portal.
-                Login functionality will be connected to Supabase in the next
-                development step.
+                Enter your email and password to access your assigned Ecom
+                Engine portal.
               </CardDescription>
             </CardHeader>
 
-            <form className="space-y-5">
+            {error ? (
+              <div className="mb-5 rounded-2xl border border-neutral-300 bg-neutral-50 p-4">
+                <p className="text-sm font-semibold text-black">
+                  Login failed
+                </p>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                  {error}
+                </p>
+              </div>
+            ) : null}
+
+            <form action={signInAction} className="space-y-5">
               <Input
                 id="email"
                 name="email"
                 type="email"
                 label="Email Address"
                 placeholder="admin@cytnexus.com"
+                required
               />
 
               <Input
@@ -86,6 +106,7 @@ export default function LoginPage() {
                 type="password"
                 label="Password"
                 placeholder="Enter password"
+                required
               />
 
               <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
@@ -93,7 +114,8 @@ export default function LoginPage() {
                   Current status
                 </p>
                 <p className="mt-2 text-sm leading-6 text-neutral-600">
-                  Login UI is ready. Supabase sign-in action will be added next.
+                  Login is now connected to Supabase. You need a Supabase Auth
+                  user to sign in successfully.
                 </p>
               </div>
 
