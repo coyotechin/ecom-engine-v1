@@ -227,7 +227,9 @@ export default async function TicketDetailPage({
                 {formatPriority(ticket.priority)} Priority
               </Badge>
 
-              <Badge variant="outline">{formatEngine(ticket.selected_engine)}</Badge>
+              <Badge variant="outline">
+                {formatEngine(ticket.selected_engine)}
+              </Badge>
             </div>
           </div>
 
@@ -236,7 +238,9 @@ export default async function TicketDetailPage({
               Back to Tickets
             </Button>
 
-            <Button variant="primary">Edit Ticket</Button>
+            <Button href={`/admin/tickets/${ticket.id}/edit`} variant="primary">
+              Edit Ticket
+            </Button>
           </div>
         </section>
 
