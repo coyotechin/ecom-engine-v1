@@ -1,120 +1,224 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
-const portals = [
+export const metadata: Metadata = {
+  title: "Ecom Engine v.1 | CYT Nexus",
+  description:
+    "Ecom Engine v.1 by CYT Nexus is a ready-to-onboard commerce operations engine for products, inventory, POS, CRM, reports, and revenue-sharing business operations.",
+};
+
+const clientPortalFeatures = [
+  "Store setup and business profile management",
+  "Product and inventory management",
+  "POS billing and offline sales",
+  "Order and payment tracking",
+  "Customer CRM and purchase history",
+  "Reports and revenue-share visibility",
+];
+
+const engineDetails = [
   {
-    title: "CYT Executive Portal",
-    route: "/admin",
+    title: "Backend-first commerce engine",
     description:
-      "Manage onboarding tickets, client access, revenue-share setup, CRM, and CYT Nexus reports.",
+      "Built to manage the operational backend of a business, while the storefront can be customized based on each client’s brand and business model.",
   },
   {
-    title: "Client Portal",
-    route: "/client",
+    title: "Online and offline sales control",
     description:
-      "Manage store setup, products, inventory, POS billing, orders, CRM, campaigns, and reports.",
+      "Connect products, inventory, POS billing, online requests, orders, customers, payments, and reports from one structured system.",
   },
   {
-    title: "Customer Storefront",
-    route: "/store/demo-store",
+    title: "Ready for revenue-sharing operations",
     description:
-      "Browse products, add to cart, checkout, and track customer orders through the live storefront.",
+      "Designed for CYT Nexus client onboarding, business setup, sales tracking, revenue-share entries, and scalable client operations.",
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main className="min-h-screen bg-white text-black">
-      <section className="border-b border-neutral-200">
-        <div className="mx-auto flex min-h-screen max-w-7xl flex-col justify-between px-6 py-8 sm:px-10 lg:px-12">
-          <header className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium tracking-[0.24em] text-neutral-500 uppercase">
-                CYT Nexus
-              </p>
-              <h1 className="mt-2 text-xl font-semibold tracking-tight text-black">
-                Ecom Engine v.1
-              </h1>
+      <header className="border-b border-neutral-200 bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-8">
+          <Link href="/" className="group inline-flex flex-col">
+            <span className="text-2xl font-semibold tracking-[0.28em] text-black uppercase sm:text-3xl">
+              CYT Nexus
+            </span>
+            <span className="mt-2 text-base font-medium tracking-[-0.03em] text-neutral-600">
+              Ecom Engine v.1
+            </span>
+          </Link>
+
+          <Link
+            href="/login"
+            style={{ color: "#FFFFFF" }}
+            className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold transition hover:bg-neutral-800"
+          >
+            Client Portal Login
+          </Link>
+        </div>
+      </header>
+
+      <section className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1fr_0.78fr] lg:items-center">
+          <div>
+            <div className="inline-flex rounded-full border border-neutral-300 bg-white px-5 py-2 text-sm font-medium text-neutral-700">
+              Ready to Onboard. Ready to Sell. Built for Revenue Sharing.
             </div>
 
-            <div className="hidden rounded-full border border-neutral-200 px-4 py-2 text-sm text-neutral-600 sm:block">
-              Development Build
-            </div>
-          </header>
+            <h1 className="mt-8 max-w-4xl text-5xl font-semibold tracking-[-0.07em] text-black sm:text-6xl lg:text-7xl">
+              One backend engine for every commerce operation.
+            </h1>
 
-          <div className="grid gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div>
-              <div className="mb-6 inline-flex rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm font-medium text-neutral-700">
-                Ready to Onboard. Ready to Sell. Built for Revenue Sharing.
-              </div>
+            <p className="mt-8 max-w-2xl text-base leading-8 text-neutral-600 sm:text-lg">
+              Ecom Engine v.1 is a minimal, scalable commerce operations
+              platform for CYT Nexus clients. It helps businesses manage store
+              setup, products, inventory, POS billing, orders, CRM, reports, and
+              revenue-share workflows from one clean client portal.
+            </p>
 
-              <h2 className="max-w-5xl text-5xl font-semibold tracking-[-0.05em] text-black sm:text-6xl lg:text-7xl">
-                One commerce engine for onboarding, operations, and storefronts.
-              </h2>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/login"
+                style={{ color: "#FFFFFF" }}
+                className="inline-flex items-center justify-center rounded-full bg-black px-7 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+              >
+                Login to Client Portal
+              </Link>
 
-              <p className="mt-8 max-w-2xl text-lg leading-8 text-neutral-600">
-                Ecom Engine v.1 is a minimal, scalable commerce operations
-                platform for CYT Nexus. It connects onboarding, client store
-                management, inventory, POS, CRM, reports, and customer shopping
-                into one structured system.
-              </p>
-            </div>
-
-            <div className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-6">
-              <p className="text-sm font-medium tracking-[0.2em] text-neutral-500 uppercase">
-                v.1 Scope Priority
-              </p>
-
-              <div className="mt-6 space-y-4">
-                {[
-                  "CYT executive onboarding portal",
-                  "Client dashboard and store setup",
-                  "Product and inventory management",
-                  "POS billing and order management",
-                  "CRM and revenue-share reports",
-                  "Customer storefront with cart and checkout",
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3"
-                  >
-                    <span className="h-2 w-2 rounded-full bg-black" />
-                    <span className="text-sm font-medium text-neutral-800">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <Link
+                href="/client"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-300 bg-white px-7 py-4 text-sm font-semibold text-black transition hover:border-black hover:text-black"
+              >
+                Open Client Dashboard
+              </Link>
             </div>
           </div>
 
-          <section className="grid gap-4 pb-8 md:grid-cols-3">
-            {portals.map((portal) => (
-              <Link
-                key={portal.route}
-                href={portal.route}
-                className="group rounded-[1.5rem] border border-neutral-200 bg-white p-6 transition hover:-translate-y-1 hover:border-black hover:shadow-xl"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-semibold tracking-tight text-black">
-                    {portal.title}
-                  </h3>
-                  <span className="rounded-full border border-neutral-200 px-3 py-1 text-xs font-medium text-neutral-500 transition group-hover:border-black group-hover:text-black">
-                    Open
+          <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
+            <div className="rounded-[1.5rem] border border-neutral-200 bg-neutral-50 p-6">
+              <p className="text-xs font-semibold tracking-[0.24em] text-neutral-500 uppercase">
+                Client Portal Login
+              </p>
+
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-black">
+                Manage commerce operations from one place.
+              </h2>
+
+              <p className="mt-4 text-sm leading-7 text-neutral-600">
+                Access the client dashboard to manage products, stock, POS,
+                orders, customers, checkout requests, and reports.
+              </p>
+
+              <div className="mt-6">
+                <Link
+                  href="/login"
+                  style={{ color: "#FFFFFF" }}
+                  className="inline-flex w-full items-center justify-center rounded-full bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+                >
+                  Client Portal Login
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-5 space-y-3">
+              {clientPortalFeatures.map((feature) => (
+                <div
+                  key={feature}
+                  className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3"
+                >
+                  <span className="h-2 w-2 rounded-full bg-black" />
+                  <span className="text-sm font-medium text-neutral-700">
+                    {feature}
                   </span>
                 </div>
-
-                <p className="mt-4 min-h-24 text-sm leading-6 text-neutral-600">
-                  {portal.description}
-                </p>
-
-                <p className="mt-6 text-sm font-semibold text-black">
-                  {portal.route}
-                </p>
-              </Link>
-            ))}
-          </section>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold tracking-[0.24em] text-neutral-500 uppercase">
+              Ecom Engine Details
+            </p>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.06em] text-black">
+              Built for businesses that need control, not just a website.
+            </h2>
+
+            <p className="mt-5 text-sm leading-7 text-neutral-600">
+              Ecom Engine v.1 focuses on business operations: products,
+              inventory, POS, customers, orders, checkout requests, payments,
+              revenue reports, and client-side store management.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {engineDetails.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-6"
+              >
+                <h3 className="text-xl font-semibold tracking-[-0.04em] text-black">
+                  {item.title}
+                </h3>
+
+                <p className="mt-4 text-sm leading-7 text-neutral-600">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-neutral-200 bg-neutral-50">
+        <div className="mx-auto grid max-w-7xl gap-6 px-6 py-14 lg:grid-cols-[1fr_0.55fr] lg:items-center">
+          <div>
+            <p className="text-xs font-semibold tracking-[0.24em] text-neutral-500 uppercase">
+              CYT Nexus Commerce Platform
+            </p>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-[-0.06em] text-black">
+              Ready-to-onboard commerce backend for modern business operations.
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-neutral-600">
+              The public home page now focuses only on the Ecom Engine value
+              proposition and the client portal login. CYT executive access is
+              no longer shown on the home page.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-neutral-200 bg-white p-6">
+            <p className="text-sm font-semibold text-black">
+              Client access only
+            </p>
+
+            <p className="mt-3 text-sm leading-7 text-neutral-600">
+              Business owners and staff can log in to manage store operations,
+              products, inventory, POS, orders, customers, and reports.
+            </p>
+
+            <Link
+              href="/login"
+              style={{ color: "#FFFFFF" }}
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+            >
+              Login to Client Portal
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-neutral-200 bg-white px-6 py-6">
+        <p className="text-center text-xs text-neutral-500">
+          CYT Nexus — Ecom Engine v.1. Ready to Onboard. Ready to Sell. Built
+          for Revenue Sharing.
+        </p>
+      </footer>
     </main>
   );
 }
