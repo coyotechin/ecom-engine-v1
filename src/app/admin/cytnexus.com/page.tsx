@@ -4,19 +4,19 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Client Login | Ecom Engine v.1 | CYT Nexus",
+  title: "CYT Executive Login | Ecom Engine v.1",
   description:
-    "Client Portal Login for Ecom Engine v.1 by CYT Nexus. Manage store setup, products, inventory, POS, orders, CRM, reports, and checkout requests.",
+    "Hidden CYT Nexus executive login page for Ecom Engine v.1 admin operations, onboarding, tickets, revenue, reports, and client access management.",
 };
 
-type ClientLoginPageProps = {
+type AdminLoginPageProps = {
   searchParams: Promise<{
     error?: string;
     success?: string;
   }>;
 };
 
-async function clientLoginAction(formData: FormData) {
+async function adminLoginAction(formData: FormData) {
   "use server";
 
   const email = String(formData.get("email") || "").trim();
@@ -24,7 +24,7 @@ async function clientLoginAction(formData: FormData) {
 
   if (!email || !password) {
     redirect(
-      `/client/login?error=${encodeURIComponent(
+      `/admin/cytnexus.com?error=${encodeURIComponent(
         "Please enter both email and password.",
       )}`,
     );
@@ -38,15 +38,15 @@ async function clientLoginAction(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/client/login?error=${encodeURIComponent(error.message)}`);
+    redirect(`/admin/cytnexus.com?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect("/client/dashboard");
+  redirect("/admin/cytnexus.com/dashboard");
 }
 
-export default async function ClientLoginPage({
+export default async function AdminLoginPage({
   searchParams,
-}: ClientLoginPageProps) {
+}: AdminLoginPageProps) {
   const { error, success } = await searchParams;
 
   return (
@@ -57,9 +57,8 @@ export default async function ClientLoginPage({
             <span className="text-3xl font-semibold tracking-[0.32em] text-black uppercase sm:text-4xl">
               CYT Nexus
             </span>
-
             <span className="mt-3 text-base font-medium tracking-[-0.03em] text-neutral-600">
-              Ecom Engine v.1
+              Ecom Engine v.1 Admin
             </span>
           </Link>
 
@@ -76,34 +75,33 @@ export default async function ClientLoginPage({
         <div className="mx-auto grid min-h-[calc(100vh-113px)] max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1fr_0.75fr] lg:items-center">
           <div>
             <div className="inline-flex rounded-full border border-neutral-300 bg-white px-5 py-2 text-sm font-medium text-neutral-700">
-              Client Portal Access
+              Hidden CYT Executive Access
             </div>
 
             <h1 className="mt-8 max-w-4xl text-5xl font-semibold tracking-[-0.07em] text-black sm:text-6xl lg:text-7xl">
-              Login to manage your commerce engine.
+              Admin access for CYT Nexus operations.
             </h1>
 
             <p className="mt-8 max-w-2xl text-base leading-8 text-neutral-600 sm:text-lg">
-              Access your Ecom Engine v.1 client dashboard to manage store
-              setup, products, inventory, POS billing, orders, customers,
-              checkout requests, reports, and revenue-share visibility.
+              This hidden portal is for CYT Nexus executives to manage
+              onboarding tickets, customer setup, client access, revenue-share
+              configuration, reports, CRM, and Ecom Engine operations.
             </p>
 
             <div className="mt-10 grid max-w-2xl gap-3 sm:grid-cols-2">
               {[
-                "Store setup",
-                "Product management",
-                "Inventory control",
-                "POS billing",
-                "Order tracking",
-                "CRM and reports",
+                "Ticket management",
+                "Customer onboarding",
+                "Client access setup",
+                "Revenue-share tracking",
+                "Admin reports",
+                "Internal activity control",
               ].map((item) => (
                 <div
                   key={item}
                   className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3"
                 >
                   <span className="h-2 w-2 rounded-full bg-black" />
-
                   <span className="text-sm font-medium text-neutral-700">
                     {item}
                   </span>
@@ -115,23 +113,22 @@ export default async function ClientLoginPage({
           <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-sm">
             <div className="rounded-[1.5rem] border border-neutral-200 bg-neutral-50 p-6">
               <p className="text-xs font-semibold tracking-[0.24em] text-neutral-500 uppercase">
-                Ecom Engine v.1
+                CYT Executive Portal
               </p>
 
               <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-black">
-                Client Portal Login
+                Admin Login
               </h2>
 
               <p className="mt-4 text-sm leading-7 text-neutral-600">
-                Enter your registered client email and password to continue to
-                your business dashboard.
+                Enter your authorized CYT Nexus admin email and password to
+                continue.
               </p>
             </div>
 
             {success ? (
               <div className="mt-5 rounded-3xl border border-black bg-white p-5">
                 <p className="text-sm font-semibold text-black">Success</p>
-
                 <p className="mt-2 text-sm leading-6 text-neutral-600">
                   {success}
                 </p>
@@ -141,29 +138,28 @@ export default async function ClientLoginPage({
             {error ? (
               <div className="mt-5 rounded-3xl border border-neutral-300 bg-neutral-50 p-5">
                 <p className="text-sm font-semibold text-black">
-                  Login failed
+                  Admin login failed
                 </p>
-
                 <p className="mt-2 text-sm leading-6 text-neutral-600">
                   {error}
                 </p>
               </div>
             ) : null}
 
-            <form action={clientLoginAction} className="mt-6 space-y-5">
+            <form action={adminLoginAction} className="mt-6 space-y-5">
               <div>
                 <label
                   htmlFor="email"
                   className="text-sm font-semibold text-black"
                 >
-                  Email Address
+                  Admin Email Address
                 </label>
 
                 <input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="client@example.com"
+                  placeholder="admin@cytnexus.com"
                   required
                   className="mt-2 w-full rounded-2xl border border-neutral-300 bg-white px-4 py-4 text-sm text-black outline-none transition placeholder:text-neutral-400 focus:border-black"
                 />
@@ -181,7 +177,7 @@ export default async function ClientLoginPage({
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Enter admin password"
                   required
                   className="mt-2 w-full rounded-2xl border border-neutral-300 bg-white px-4 py-4 text-sm text-black outline-none transition placeholder:text-neutral-400 focus:border-black"
                 />
@@ -192,19 +188,17 @@ export default async function ClientLoginPage({
                 style={{ color: "#FFFFFF" }}
                 className="inline-flex w-full items-center justify-center rounded-full border border-black bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
               >
-                Login to Client Portal
+                Login to Admin Portal
               </button>
             </form>
 
             <div className="mt-6 rounded-3xl border border-neutral-200 bg-neutral-50 p-5">
               <p className="text-sm font-semibold text-black">
-                Client access only
+                Internal access only
               </p>
-
               <p className="mt-2 text-sm leading-6 text-neutral-600">
-                This login is for onboarded Ecom Engine v.1 business owners and
-                assigned staff. CYT Nexus admin access is handled through a
-                separate hidden route.
+                This page is intentionally hidden from the public homepage and
+                must be used only by authorized CYT Nexus team members.
               </p>
             </div>
           </div>

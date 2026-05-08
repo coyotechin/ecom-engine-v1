@@ -41,7 +41,7 @@ async function clientLoginAction(formData: FormData) {
     redirect(`/client/login?error=${encodeURIComponent(error.message)}`);
   }
 
-  redirect("/client/dashboard");
+  redirect("/client");
 }
 
 export default async function ClientLoginPage({
@@ -57,7 +57,6 @@ export default async function ClientLoginPage({
             <span className="text-3xl font-semibold tracking-[0.32em] text-black uppercase sm:text-4xl">
               CYT Nexus
             </span>
-
             <span className="mt-3 text-base font-medium tracking-[-0.03em] text-neutral-600">
               Ecom Engine v.1
             </span>
@@ -103,7 +102,6 @@ export default async function ClientLoginPage({
                   className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3"
                 >
                   <span className="h-2 w-2 rounded-full bg-black" />
-
                   <span className="text-sm font-medium text-neutral-700">
                     {item}
                   </span>
@@ -131,7 +129,6 @@ export default async function ClientLoginPage({
             {success ? (
               <div className="mt-5 rounded-3xl border border-black bg-white p-5">
                 <p className="text-sm font-semibold text-black">Success</p>
-
                 <p className="mt-2 text-sm leading-6 text-neutral-600">
                   {success}
                 </p>
@@ -143,7 +140,6 @@ export default async function ClientLoginPage({
                 <p className="text-sm font-semibold text-black">
                   Login failed
                 </p>
-
                 <p className="mt-2 text-sm leading-6 text-neutral-600">
                   {error}
                 </p>
@@ -200,10 +196,9 @@ export default async function ClientLoginPage({
               <p className="text-sm font-semibold text-black">
                 Client access only
               </p>
-
               <p className="mt-2 text-sm leading-6 text-neutral-600">
                 This login is for onboarded Ecom Engine v.1 business owners and
-                assigned staff. CYT Nexus admin access is handled through a
+                assigned staff. CYT Nexus admin access will be handled through a
                 separate hidden route.
               </p>
             </div>

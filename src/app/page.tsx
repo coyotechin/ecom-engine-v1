@@ -49,9 +49,9 @@ export default function HomePage() {
           </Link>
 
           <Link
-            href="/login"
+            href="/client/login"
             style={{ color: "#FFFFFF" }}
-            className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold transition hover:bg-neutral-800"
+            className="inline-flex items-center justify-center rounded-full border border-black bg-black px-6 py-3 text-sm font-semibold transition hover:bg-neutral-800"
           >
             Client Portal Login
           </Link>
@@ -78,18 +78,18 @@ export default function HomePage() {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/login"
+                href="/client/login"
                 style={{ color: "#FFFFFF" }}
-                className="inline-flex items-center justify-center rounded-full bg-black px-7 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+                className="inline-flex items-center justify-center rounded-full border border-black bg-black px-7 py-4 text-sm font-semibold transition hover:bg-neutral-800"
               >
                 Login to Client Portal
               </Link>
 
               <Link
-                href="/client"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-300 bg-white px-7 py-4 text-sm font-semibold text-black transition hover:border-black hover:text-black"
+                href="/client/login"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-300 bg-white px-7 py-4 text-sm font-semibold text-black transition hover:border-black hover:bg-neutral-50"
               >
-                Open Client Dashboard
+                Request Client Access
               </Link>
             </div>
           </div>
@@ -111,9 +111,9 @@ export default function HomePage() {
 
               <div className="mt-6">
                 <Link
-                  href="/login"
+                  href="/client/login"
                   style={{ color: "#FFFFFF" }}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+                  className="inline-flex w-full items-center justify-center rounded-full border border-black bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
                 >
                   Client Portal Login
                 </Link>
@@ -186,9 +186,9 @@ export default function HomePage() {
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-neutral-600">
-              The public home page now focuses only on the Ecom Engine value
-              proposition and the client portal login. CYT executive access is
-              no longer shown on the home page.
+              The public home page focuses only on the Ecom Engine value
+              proposition and the Client Portal login. CYT executive access is
+              intentionally hidden from the home page.
             </p>
           </div>
 
@@ -203,9 +203,9 @@ export default function HomePage() {
             </p>
 
             <Link
-              href="/login"
+              href="/client/login"
               style={{ color: "#FFFFFF" }}
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-black bg-black px-6 py-4 text-sm font-semibold transition hover:bg-neutral-800"
             >
               Login to Client Portal
             </Link>
